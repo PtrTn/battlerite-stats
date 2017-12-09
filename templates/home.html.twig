@@ -15,10 +15,10 @@
             <div class="row">
                 <div class="col-sm-8">
                     <div class="input-group">
-                        <input type="text" class="form-control" placeholder="Search for...">
-                        <span class="input-group-btn">
-                            <button class="btn btn-default" type="button">Go!</button>
-                        </span>
+                        {{ form_start(form) }}
+                        {{ form_widget(form.PlayerId) }}
+                        {{ form_widget(form.save) }}
+                        {{ form_end(form) }}
                     </div>
                 </div>
             </div>

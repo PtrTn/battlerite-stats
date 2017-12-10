@@ -24,23 +24,35 @@
             </div>
         </div>
 
-        <hr>
-
-        <div class="row-fluid marketing">
-            <div class="span6">
-                <h4>Match 1</h4>
-                <p>Donec id elit non mi porta gravida at eget metus. Maecenas faucibus mollis interdum.</p>
-
-                <h4>Match 2</h4>
-                <p>Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Cras mattis consectetur purus sit amet
-                    fermentum.</p>
-
-                <h4>Match 3</h4>
-                <p>Maecenas sed diam eget risus varius blandit sit amet non magna.</p>
+        {% if playerData %}
+            <hr>
+            <div class="row-fluid marketing">
+                <div class="span6">
+                    <h4>{{ playerData.name }}</h4>
+                    <p>Picture {{ playerData.picture }}</p>
+                    <p>Title {{ playerData.title }}</p>
+                </div>
             </div>
-        </div>
+        {% endif %}
 
-        <hr>
+        {% if matchesData %}
+            <hr>
+            <div class="row-fluid marketing">
+                <div class="span6">
+                    {% for match in matchesData %}
+                        <h4>{{ match.map.type }}</h4>
+                        <p>{{ match.createdAt|date('j M-Y G:i') }}</p>
+                        {% for participant in match.participants %}
+                            {% if participant.userID == playerData.id %}
+                                <p>Champion {{ participant.actor }}</p>
+                                <p>Score {{ participant.score }}</p>
+                                <p>K/D {{ participant.kills }}/{{ participant.deaths }}</p>
+                            {% endif %}
+                        {% endfor %}
+                    {% endfor %}
+                </div>
+            </div>
+        {% endif %}
 
         <div class="footer">
             <p>&copy; Peter Ton {{ 'now'|date('Y') }}</p>

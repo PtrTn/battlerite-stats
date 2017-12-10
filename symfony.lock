@@ -1,4 +1,13 @@
 {
+    "guzzlehttp/guzzle": {
+        "version": "6.3.0"
+    },
+    "guzzlehttp/promises": {
+        "version": "v1.3.1"
+    },
+    "guzzlehttp/psr7": {
+        "version": "1.4.2"
+    },
     "hamcrest/hamcrest-php": {
         "version": "v2.0.0"
     },
@@ -17,11 +26,17 @@
     "psr/container": {
         "version": "1.0.0"
     },
+    "psr/http-message": {
+        "version": "1.0.1"
+    },
     "psr/log": {
         "version": "1.0.2"
     },
     "psr/simple-cache": {
         "version": "1.0.0"
+    },
+    "ptrtn/battlerite": {
+        "version": "v1.0.0"
     },
     "squizlabs/php_codesniffer": {
         "version": "3.1.1"
@@ -148,5 +163,8 @@
     },
     "twig/twig": {
         "version": "v2.4.4"
+    },
+    "webmozart/assert": {
+        "version": "1.2.0"
     }
 }

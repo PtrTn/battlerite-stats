@@ -41,7 +41,7 @@
                 <div class="span6">
                     {% for match in matchesData %}
                         <h4>{{ match.map.type }}</h4>
-                        <p>{{ match.createdAt|date('j M-Y G:i') }}</p>
+                        <time class="timeago" datetime="{{ match.createdAt|date('c') }}"></time>
                         {% for participant in match.participants %}
                             {% if participant.userID == playerData.id %}
                                 <p>Champion {{ participant.actor }}</p>

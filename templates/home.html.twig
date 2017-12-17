@@ -27,10 +27,21 @@
         {% if playerData %}
             <hr>
             <div class="row-fluid marketing">
-                <div class="span6">
-                    <h4>{{ playerData.name }}</h4>
-                    <p>Picture {{ playerData.picture }}</p>
-                    <p>Title {{ playerData.title }}</p>
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="media">
+                                <div class="media-left media-middle">
+                                    <img class="media-object" src="http://via.placeholder.com/64x64">
+                                </div>
+                                <div class="media-body">
+                                    <h4>{{ playerData.name }}</h4>
+                                    <p>Picture {{ playerData.picture }}</p>
+                                    <p>Title {{ playerData.title }}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         {% endif %}
@@ -38,17 +49,28 @@
         {% if matchesData %}
             <hr>
             <div class="row-fluid marketing">
-                <div class="span6">
+                <div class="container-fluid">
                     {% for match in matchesData %}
-                        <h4>{{ match.map.type }}</h4>
-                        <time class="timeago" datetime="{{ match.createdAt|date('c') }}"></time>
-                        {% for participant in match.participants %}
-                            {% if participant.userID == playerData.id %}
-                                <p>Champion {{ participant.actor }}</p>
-                                <p>Score {{ participant.score }}</p>
-                                <p>K/D {{ participant.kills }}/{{ participant.deaths }}</p>
-                            {% endif %}
-                        {% endfor %}
+                        <div class="row spaced-row">
+                            <div class="col-sm-12 {{ match.hasPlayerWon(playerData.id) ? 'bg-success' : 'bg-danger' }}">
+                                <div class="media">
+                                    <div class="media-left media-middle">
+                                        <img class="media-object" src="http://via.placeholder.com/64x64">
+                                    </div>
+                                    <div class="media-body">
+                                        <h4>{{ match.map.type }}</h4>
+                                        <time class="timeago pull-right" datetime="{{ match.createdAt|date('c') }}"></time>
+                                        {% for participant in match.participants %}  {#todo, replace by helper method #}
+                                            {% if participant.userID == playerData.id %}
+                                                <p>Champion {{ participant.actor }}</p>
+                                                <p>Score {{ participant.score }}</p>
+                                                <p>K/D {{ participant.kills }}/{{ participant.deaths }}</p>
+                                            {% endif %}
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     {% endfor %}
                 </div>
             </div>

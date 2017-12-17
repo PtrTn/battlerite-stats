@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use Doctrine\Common\Cache\FilesystemCache;
 use PtrTn\Battlerite\ClientWithCache;
 use PtrTn\Battlerite\Query\MatchesQuery;
 use PtrTn\Battlerite\Query\PlayersQuery;
@@ -37,7 +38,11 @@ class HomeController extends Controller
         }
 
         $searchQuery = $form->getData();
-        $client = ClientWithCache::create(getenv('APIKEY'));
+        $client = ClientWithCache::createWithCache(
+            getenv('APIKEY'),
+            new FilesystemCache('/tmp/battlerite', '.cache'),
+            3600
+        );
         if (!isset($searchQuery['PlayerName'])) {
             $this->redirectToRoute('index');
         }
@@ -52,7 +57,7 @@ class HomeController extends Controller
         $matches = $client->getMatches(
             MatchesQuery::create()
                 ->forPlayerIds([$playerData->id])
-                ->withLimit(5)
+                ->withLimit(10)
                 ->sortDescBy('createdAt')
         );
         $matchesData = [];

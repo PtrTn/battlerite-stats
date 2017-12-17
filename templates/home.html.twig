@@ -60,13 +60,10 @@
                                     <div class="media-body">
                                         <h4>{{ match.map.type }}</h4>
                                         <time class="timeago pull-right" datetime="{{ match.createdAt|date('c') }}"></time>
-                                        {% for participant in match.participants %}  {#todo, replace by helper method #}
-                                            {% if participant.userID == playerData.id %}
-                                                <p>Champion {{ participant.actor }}</p>
-                                                <p>Score {{ participant.score }}</p>
-                                                <p>K/D {{ participant.kills }}/{{ participant.deaths }}</p>
-                                            {% endif %}
-                                        {% endfor %}
+                                        {% set participant = match.getParticipantByPlayerId(playerData.id) %}
+                                        <p>Champion {{ participant.actor }}</p>
+                                        <p>Score {{ participant.score }}</p>
+                                        <p>K/D {{ participant.kills }}/{{ participant.deaths }}</p>
                                     </div>
                                 </div>
                             </div>

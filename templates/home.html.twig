@@ -51,19 +51,27 @@
             <div class="row-fluid marketing">
                 <div class="container-fluid">
                     {% for match in matchesData %}
-                        <div class="row spaced-row">
+                        {% set participant = match.getParticipantByPlayerId(playerData.id) %}
+                        <div class="match row spaced-row">
                             <div class="col-sm-12 {{ match.hasPlayerWon(playerData.id) ? 'bg-success' : 'bg-danger' }}">
                                 <div class="media">
                                     <div class="media-left media-middle">
-                                        <img class="media-object" src="http://via.placeholder.com/64x64">
+                                        <img class="media-object img-rounded" src="{{ asset('build/images/' ~ participant.actor|champion ~ '.png') }}">
                                     </div>
                                     <div class="media-body">
-                                        <h4>{{ match.map.type }}</h4>
-                                        <time class="timeago pull-right" datetime="{{ match.createdAt|date('c') }}">{{ match.createdAt|date('d-m-Y H:i') }}</time>
-                                        {% set participant = match.getParticipantByPlayerId(playerData.id) %}
-                                        <p>{{ participant.actor|champion }}</p>
-                                        <p>Score {{ participant.score }}</p>
-                                        <p>K/D {{ participant.kills }}/{{ participant.deaths }}</p>
+                                        <div class="row padded-row">
+                                            <div class="col-sm-6">
+                                                <h4>{{ match.map.type }}</h4>
+                                                <p>{{ participant.actor|champion }}</p>
+                                                <p>Score {{ participant.score }}</p>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <time class="timeago pull-right" datetime="{{ match.createdAt|date('c') }}">{{ match.createdAt|date('d-m-Y H:i') }}</time>
+                                                <p>Damage {{ participant.damageDone }}</p>
+                                                <p>Protection {{ participant.healingDone }}</p>
+                                                <p>Disables {{ participant.disablesDone }}</p>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>

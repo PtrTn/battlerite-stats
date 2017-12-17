@@ -2,8 +2,9 @@
 
 namespace App\Controller;
 
-use PtrTn\Battlerite\Client;
+use PtrTn\Battlerite\ClientWithCache;
 use PtrTn\Battlerite\Query\MatchesQuery;
+use PtrTn\Battlerite\Query\PlayersQuery;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -36,16 +37,22 @@ class HomeController extends Controller
         }
 
         $searchQuery = $form->getData();
-        $client = Client::create(getenv('APIKEY'));
-        if (!isset($searchQuery['PlayerId'])) {
+        $client = ClientWithCache::create(getenv('APIKEY'));
+        if (!isset($searchQuery['PlayerName'])) {
             $this->redirectToRoute('index');
         }
-        //934791968557563904
-        $playerData = $client->getPlayer($searchQuery['PlayerId']);
+
+        $playersData = $client->getPlayers(
+            PlayersQuery::create()
+                ->forPlayerNames([$searchQuery['PlayerName']])
+        );
+
+        $playerData = $playersData->getPlayerByNameAndShard($searchQuery['PlayerName'], 'global');
+
         $matches = $client->getMatches(
             MatchesQuery::create()
-                ->forPlayerIds([$searchQuery['PlayerId']])
-                ->withLimit(1)
+                ->forPlayerIds([$playerData->id])
+                ->withLimit(5)
                 ->sortDescBy('createdAt')
         );
         $matchesData = [];
@@ -65,7 +72,7 @@ class HomeController extends Controller
     private function createSearchForm(): FormInterface
     {
         $form = $this->createFormBuilder()
-            ->add('PlayerId', TextType::class)
+            ->add('PlayerName', TextType::class, ['attr' => ['placeholder ' => 'Player name']])
             ->add('save', SubmitType::class, array('label' => 'Go!'))
             ->getForm();
         return $form;

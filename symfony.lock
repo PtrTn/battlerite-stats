@@ -1,4 +1,7 @@
 {
+    "doctrine/cache": {
+        "version": "v1.7.1"
+    },
     "guzzlehttp/guzzle": {
         "version": "6.3.0"
     },
@@ -36,7 +39,7 @@
         "version": "1.0.0"
     },
     "ptrtn/battlerite": {
-        "version": "v1.0.0"
+        "version": "v1.4"
     },
     "squizlabs/php_codesniffer": {
         "version": "3.1.1"

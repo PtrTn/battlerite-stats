@@ -59,9 +59,9 @@
                                     </div>
                                     <div class="media-body">
                                         <h4>{{ match.map.type }}</h4>
-                                        <time class="timeago pull-right" datetime="{{ match.createdAt|date('c') }}"></time>
+                                        <time class="timeago pull-right" datetime="{{ match.createdAt|date('c') }}">{{ match.createdAt|date('d-m-Y H:i') }}</time>
                                         {% set participant = match.getParticipantByPlayerId(playerData.id) %}
-                                        <p>Champion {{ participant.actor }}</p>
+                                        <p>{{ participant.actor|champion }}</p>
                                         <p>Score {{ participant.score }}</p>
                                         <p>K/D {{ participant.kills }}/{{ participant.deaths }}</p>
                                     </div>

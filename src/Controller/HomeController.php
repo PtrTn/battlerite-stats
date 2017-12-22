@@ -57,7 +57,7 @@ class HomeController extends Controller
         $matches = $client->getMatches(
             MatchesQuery::create()
                 ->forPlayerIds([$playerData->id])
-                ->withLimit(10)
+                ->withLimit(3)
                 ->sortDescBy('createdAt')
         );
         $matchesData = [];
